@@ -59,7 +59,7 @@ public class fibonacci_kth_nth {
             for (int j = 0; j < M2[0].length; j++) {
                 long sum = 0;
                 for (int k = 0; k < M[0].length; k++) {
-                    sum = (sum+  (M[i][k] * M2[k][j]) % mod)%mod;
+                    sum = (sum+  M[i][k] * M2[k][j])%mod;
                 }
                 res[i][j] = sum;
             }
