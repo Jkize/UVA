@@ -14,8 +14,8 @@ public class fibonacci_kth_nth {
     static long R[][];
 
     public static void main(String[] args) throws IOException {
-        int k = 2; //Constante k
-        String nth = "10"; //nth termino de la sucección
+        int k = 3; //Constante k
+        String nth = "4"; //nth termino de la sucección
 
         BigInteger n = (new BigInteger(nth)).add(BigInteger.ONE);
         if (n.compareTo(new BigInteger(String.valueOf(k))) <= 0) {
@@ -77,4 +77,44 @@ public class fibonacci_kth_nth {
         return result;
     }
 
+    /**
+     * Con BigInteger
+     */
+    public static BigInteger[][] multiplicacion(BigInteger M[][], BigInteger M2[][]) {
+
+        BigInteger res[][] = new BigInteger[M.length][M2[0].length];
+
+        for (int i = 0; i < M.length; i++) {
+            for (int j = 0; j < M2[0].length; j++) {
+                BigInteger sum = BigInteger.ZERO;
+                for (int k = 0; k < M[0].length; k++) {
+
+                    sum = sum.add((M[i][k]).multiply(M2[k][j]));
+
+                }
+                res[i][j] = sum;
+            }
+        }
+
+        return res;
+    }
+
+    public static BigInteger[][] power_iter(BigInteger M[][], int n) {
+        //Matrix Identidad
+        BigInteger R[][]=new BigInteger[M.length][M.length];
+        //Hay que iniciarla, aún no esta inicidado toca MatrixIdentidad        
+        BigInteger result[][] = R.clone();
+        while (n > 0) {
+            if (n % 2 != 0) {
+                result = multiplicacion(result, M);
+                n -= 1;
+            } else {
+                M = multiplicacion(M, M);
+                n /= 2;
+            }
+        }
+        return result;
+    }
+    
+    
 }
