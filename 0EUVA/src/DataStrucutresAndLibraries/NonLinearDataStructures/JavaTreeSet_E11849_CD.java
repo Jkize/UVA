@@ -15,6 +15,7 @@ import java.util.HashSet;
         while((h=in.readLine())!=null && !h.equals("0 0")){
             String g[]=h.split(" ");
             HashSet primero=new HashSet(); 
+            
             for(int i=0; i<Integer.parseInt(g[0]); i++){
                 primero.add(in.readLine());
             }

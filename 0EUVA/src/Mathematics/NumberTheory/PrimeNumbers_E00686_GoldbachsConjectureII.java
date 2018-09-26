@@ -13,12 +13,12 @@ import java.io.OutputStreamWriter;
 
 /**
  *
- * @author Jkize
- * 543 Goldbach's Conjecture
+ * @author Jhoan Saavedra
  */
-public class PrimeNumbers_E00543_GoldbachsConjecture {
+public class PrimeNumbers_E00686_GoldbachsConjectureII {
 
-   static int[] tableprimos;
+    static int[] tableprimos;
+    static int res;
 
     public static void iniciar(int n) {
         tableprimos = new int[n + 1];
@@ -35,34 +35,34 @@ public class PrimeNumbers_E00543_GoldbachsConjecture {
     }
 
     public static void main(String[] args) throws IOException {
-        iniciar(1000000); 
+        iniciar((int) Math.pow(2, 15));
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
         String p;
         while ((p = in.readLine()) != null && !p.equals("0")) {
             int a = Integer.parseInt(p);
-
-            int n = prime(a);
-            if (n != 0) {
-                out.write(a + " = " + n + " + " + (a - n) + "\n");
-            } else {
-                out.write(a + " = 0 + " + a + "\n");
-            }
+            res = 0;
+            prime(a);
+            out.write(res + "\n");
 
         }
         out.flush();
-    } 
-    public static int prime(int p) {
+    }
 
-        for (int i = 3; i <=Math.floor(p/2); i++) {
-            if (tableprimos[i]==0) {
-                int s = p - i;
-                if (tableprimos[s]==0) {
-                    return i;
+    /**
+     * O(n/2)
+     * @param p 
+     */
+    public static void prime(int p) {
+
+        for (int i = 1; i <=Math.floor(p/2); i++) {
+            if (tableprimos[i] == 0) {
+                int s = p - i; 
+                if ((2 * i == p) || (s > i && tableprimos[s] == 0)) {
+                    res++;
                 }
             }
         }
 
-        return 0;
     }
 }
