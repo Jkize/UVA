@@ -14,10 +14,9 @@ import java.math.BigInteger;
 
 /**
  *
- * @author Jkize 
- * Uva 495 Fibonacci Freeze
+ * @author Jhoan Saavedra
  */
-public class Fibonacci_E00495_FibonacciFreeze {
+public class Fibonacci_E10579_FibonacciNumbers {
 
     static final String f0[] = {"0", "1", "1"};
     static BigInteger R[][];
@@ -47,13 +46,14 @@ public class Fibonacci_E00495_FibonacciFreeze {
         while ((h = in.readLine()) != null) {
             int n = Integer.parseInt(h);
             if (n <= 2) {
-                out.write("The Fibonacci number for " + n + " is " + f0[n].toString() + "\n");
+                out.write(f0[n].toString() + "\n");
             } else {
-                out.write("The Fibonacci number for " + n + " is " + (multiplicacion(power_iter(M, n - 2), f)[0][0]).toString() + "\n");
+                out.write((multiplicacion(power_iter(M, n - 2), f)[0][0]).toString() + "\n");
             }
-            
-        out.flush();
+
         }
+
+        out.flush();
     }
 
     public static BigInteger[][] multiplicacion(BigInteger M[][], BigInteger M2[][]) {
