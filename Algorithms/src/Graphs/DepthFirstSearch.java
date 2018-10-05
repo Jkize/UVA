@@ -8,6 +8,8 @@ package Graphs;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 /**
  *
@@ -15,36 +17,68 @@ import java.util.List;
  */
 public class DepthFirstSearch {
 
-    private boolean[] marked;
-    private int count;
+    private boolean[] marked; // Has dfs() been called for this vertex?
+    private int count; // last vertex on known path to this vertex
     private ArrayList connected;
+    final int s;
+    private int[] edgeTo;
 
     public DepthFirstSearch(Graph G, int s) {
         marked = new boolean[G.V()];
-        connected=new  ArrayList();
+        connected = new ArrayList();
+        edgeTo = new int[G.V()];
+        this.s = s;
         dfs(G, s);
     }
 
     public void dfs(Graph G, int v) {
-        marked[v]=true;
+        marked[v] = true;
         connected.add(v);
         count++;
-        for(int w:G.adj(v)){
-            if(!marked[w]) dfs(G,w);
+        for (Integer w : G.adj(v)) {
+            if (!marked[w]) {
+                edgeTo[w] = v;
+                dfs(G, w);
+
+            }
         }
 
     }
-    public boolean marked(int w){
+
+    /**
+     * if there a path from s to v?
+     *
+     * @param w
+     * @return
+     */
+    public boolean hasPathTo(int w) {
         return marked[w];
     }
-    public int count(){
+
+    public int count() {
         return count;
     }
-    public List lista(){
+
+    public List lista() {
         return connected;
     }
+
     /**
-     * algoritmo p
+     * Path from s to v; null if no such path
+     *
+     * @param v
+     * @return Iterable
      */
+    public Iterable<Integer> pathTo(int v) {
+        if (!hasPathTo(v)) {
+            return null;
+        }
+        Stack<Integer> path = new Stack<>(); 
+        for (int x = v; x != s; x = edgeTo[x]) {
+            path.push(x);
+        }
+        path.push(s);
+        return path;
+    }
 
 }
