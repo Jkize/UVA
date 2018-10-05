@@ -6,16 +6,16 @@
 package Graphs;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
  *
- * @author ACER
+ * @author white
  */
-public class DepthFirstSearch {
+public class BreadthFirstPaths {
 
     private boolean[] marked; // Has dfs() been called for this vertex?
     private int count; // last vertex on known path to this vertex
@@ -23,30 +23,37 @@ public class DepthFirstSearch {
     final int s;
     private int[] edgeTo;
 
-    public DepthFirstSearch(Graph G, int s) {
+    public BreadthFirstPaths(Graph G, int s) {
         marked = new boolean[G.V()];
         connected = new ArrayList();
         edgeTo = new int[G.V()];
         this.s = s;
-        dfs(G, s);
+        bfs(G, s);
     }
 
-    public void dfs(Graph G, int v) {
-        marked[v] = true;
-        connected.add(v);
+    public void bfs(Graph G, int s) {
+        Queue<Integer> queue = new LinkedList();
+        marked[s] = true;
+        connected.add(s);
         count++;
-        for (Integer w : G.adj(v)) {
-            if (!marked[w]) {
-                edgeTo[w] = v;
-                dfs(G, w);
-
+        while (!queue.isEmpty()) {
+            int v = queue.remove();
+            for (Integer w : G.adj(v)) {
+                if (!marked[w]) {
+                    edgeTo[w] = v;
+                    marked[w] = true;
+                    queue.add(w);
+                    count++;
+                    
+                    connected.add(w);
+                }
             }
         }
 
     }
 
     /**
-     * if there a path from s to v? 
+     * if there a path from s to v?
      *
      * @param w
      * @return
@@ -73,12 +80,12 @@ public class DepthFirstSearch {
         if (!hasPathTo(v)) {
             return null;
         }
-        Stack<Integer> path = new Stack<>(); 
+        Stack<Integer> path = new Stack<>();
         for (int x = v; x != s; x = edgeTo[x]) {
             path.push(x);
         }
         path.push(s);
         return path;
-    }
-
+    }    
+   
 }
